@@ -1,0 +1,18 @@
+- remove all cars (DONE)
+- implement forward and backwards only 
+
+reward system
+    - penalize each time step 
+    - give a reward when you hit a checkpoint (but only once)
+
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+checkpoints -> [1,2,3,4,5,6,7,8,9,10]
+
+Then can keep an array of booleans, if you land on a zone with false, add reward 
+and set to true 
+
+a  b
+
+idx = (x // bucket length) - 1.
+ex: if in first bucket, then no idx. But if second bucket, that means we have first checkpoint. (idx 0)
+

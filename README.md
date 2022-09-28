@@ -24,7 +24,7 @@ and $-100$ points for crashing into the walls or into another car.
 
 ### Ablations
 Some ablations included changing the number of sensors (from 5, 11, to 21), changing the length of the sensors (100, 150, 200, 300), changing the 
-steering movement of the car (from steering the car in a certain angle versus moving a fixed distance right, left, or up) and 
+steering movement of the car (from steering the car in a certain angle versus moving a fixed distance right, left, or up versus continuously moving left, right, up) and 
 the depth of the network approximating the Q function. 
 Moreover, elements from *imitation learning* was used- in particular, human "expert" experience was recorded and stored as an array
 which was added to the experience replay buffer. Both **replay buffer spiking** (adding the human experience into the buffer and then filling the rest 

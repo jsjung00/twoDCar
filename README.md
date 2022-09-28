@@ -30,3 +30,8 @@ Moreover, elements from *imitation learning* was used- in particular, human "exp
 which was added to the experience replay buffer. Both **replay buffer spiking** (adding the human experience into the buffer and then filling the rest 
 with the agent's own experiences) and **pre-training** on the human experience to have the q-values update in accordance with human experience was tried.
 
+Moreover, a greedy agent hardcoded with if/else rules was used as a baseline.
+
+Code references:
+- https://github.com/tensorflow/tfjs-examples/tree/master/snake-dqn
+- https://github.com/gniziemazity/Self-driving-car

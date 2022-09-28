@@ -1,7 +1,11 @@
-class Car {
-  constructor(x, y, width, height, controlType, maxSpeed = 3) {
-    this.x = x;
-    this.y = y;
+import * as tf from "@tensorflow/tfjs";
+
+export class Car {
+  constructor(initX, initY, width, height, controlType, maxSpeed = 3) {
+    this.x = initX;
+    this.y = initY;
+    this.initX = initX;
+    this.initY = initY;
     this.width = width;
     this.height = height;
     this.speed = 0;
@@ -11,6 +15,8 @@ class Car {
     this.angle = 0;
     this.damaged = false;
     this.useBrain = controlType == "AI";
+    //constants used for reinforcement system
+    this.goalY = -100;
 
     this.controls = new Controls(controlType);
     if (controlType != "DUMMY") {
@@ -18,7 +24,16 @@ class Car {
       this.brain = new NeuralNetwork([this.sensor.rayCount, 6, 4]);
     }
   }
-  update(roadBorders, traffic) {
+  resetLocation() {
+    this.x = this.initX;
+    this.y = this.initY;
+    this.speed = 0;
+    this.angle = 0;
+    this.acceleration = 0.1;
+    this.damaged = false;
+  }
+
+  update(roadBorders, traffic, action = null) {
     if (!this.damaged) {
       this.#move();
       this.polygon = this.#createPolygon();
@@ -26,17 +41,14 @@ class Car {
     }
     if (this.sensor) {
       this.sensor.update(roadBorders, traffic);
-      const offsets = this.sensor.readings.map((s) =>
-        s == null ? 0 : 1 - s.offset
-      );
-      const outputs = NeuralNetwork.feedForward(offsets, this.brain);
-      if (this.useBrain) {
-        this.controls.forward = outputs[0];
-        this.controls.left = outputs[1];
-        this.controls.right = outputs[2];
-        this.controls.reverse = outputs[3];
-      }
     }
+    if (this.useBrain) {
+      return this.isDone();
+    }
+  }
+
+  isDone() {
+    return this.y <= this.goalY;
   }
 
   #assessDamage(roadBorders, traffic) {
@@ -109,7 +121,13 @@ class Car {
 
     this.x -= Math.sin(this.angle) * this.speed;
     this.y -= Math.cos(this.angle) * this.speed;
-    this.y -= this.speed;
+  }
+
+  getStateTensor() {
+    const offsets = this.sensor.readings.map((s) =>
+      s == null ? 0 : 1 - s.offset
+    );
+    return tf.tensor2d([offsets]);
   }
 
   draw(ctx, color, drawSensor = false) {

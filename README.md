@@ -22,8 +22,8 @@ it hadn't passed before and each checkpoint had the same unit of reward, i.e $50
 twice as many points as $25%$ covered. Moreover, there was a lump reward of $100$ points for passing the goal of $10000$ distance
 and $-100$ points for crashing into the walls or into another car.
 
-### Ablations
-Some ablations included changing the number of sensors (from 5, 11, to 21), changing the length of the sensors (100, 150, 200, 300), changing the 
+### Modifications/Experiments
+Some modifications included changing the number of sensors (from 5, 11, to 21), changing the length of the sensors (100, 150, 200, 300), changing the 
 steering movement of the car (from steering the car in a certain angle versus moving a fixed distance right, left, or up versus continuously moving left, right, up) and 
 the depth of the network approximating the Q function. 
 Moreover, elements from *imitation learning* was used- in particular, human "expert" experience was recorded and stored as an array
